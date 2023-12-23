@@ -22,6 +22,9 @@
       "matches": [
         "<all_urls>"
       ],
+      "css": [
+        "createContent.css"
+      ],
       "js": [
         "createContent.js"
       ]

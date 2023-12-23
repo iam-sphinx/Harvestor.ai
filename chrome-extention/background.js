@@ -1,5 +1,5 @@
 function mailgenerateContent(prompt, tone, outputLanguage) {
-  return fetch("http://localhost:3000/mailgenerateContent", {
+  return fetch("http://localhost:3000/generateContent", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -46,7 +46,8 @@ chrome.runtime.onMessage.addListener(async (request) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "scrapedContent") {
-    // Open a prompt box or perform any other action with the scraped content
+    // Send a message to the content script indicating that scraping is complete,ask him to open a popup
+    chrome.tabs.sendMessage(sender.tab.id, { action: "scrapingComplete" });
     alert(request.content);
   }
 });

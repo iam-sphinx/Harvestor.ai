@@ -356,28 +356,28 @@ const setButtonLoaded = () => {
   button.appendChild(img);
 };
 
-const handleClick = (e) => {
-  // If element is GPT-3 button, do nothing
-  if (e.target.id == "generate-button") {
-    return;
-  }
+// const handleClick = (e) => {
+//   // If element is GPT-3 button, do nothing
+//   if (e.target.id == "generate-button") {
+//     return;
+//   }
 
-  // If element is in editable parent, create button
-  const editableDivs = getAllEditable();
-  for (const div of editableDivs) {
-    console.log(editableDivs);
-    if (div.contains(e.target)) {
-      deleteButton();
-      const tempElement = document.querySelector(
-        'div[aria-label="New Message"]'
-      );
+//   // If element is in editable parent, create button
+//   const editableDivs = getAllEditable();
+//   for (const div of editableDivs) {
+//     console.log(editableDivs);
+//     if (div.contains(e.target)) {
+//       deleteButton();
+//       const tempElement = document.querySelector(
+//         'div[aria-label="New Message"]'
+//       );
 
-      lastActiveElement = tempElement;
-      createButton();
-      break;
-    }
-  }
-};
+//       lastActiveElement = tempElement;
+//       createButton();
+//       break;
+//     }
+//   }
+// };
 
 // Add event listeners
 document.body.addEventListener("click", handleClick);
@@ -490,13 +490,19 @@ chrome.runtime.onMessage.addListener((request) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "runScraper") {
+    console.log("hererere");
     // Your scraping logic here
     let scrapedContent = extractTextContent();
-
     // Send the scraped content back to the extension
     chrome.runtime.sendMessage({
       action: "scrapedContent",
       content: scrapedContent,
     });
+  }
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === "scrapingComplete") {
+    // inject button at bottom of dom
   }
 });

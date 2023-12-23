@@ -1,10 +1,8 @@
-
 document.addEventListener("DOMContentLoaded", function () {
-  var actionButton = document.getElementById("actionButton");
+  var actionButton = document.getElementById("scrapeButton");
   actionButton.addEventListener("click", function () {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      var activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, { action: "runScraper" });
-    });
+    console.log("asked to run scarper");
+    const response = chrome.runtime.sendMessage({ action: "runScraper" });
+    console.log(response);
   });
 });
