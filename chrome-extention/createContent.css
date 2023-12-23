@@ -1,0 +1,406 @@
+.generate-button {
+  background: #181c23;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 80px;
+  right: -10px;
+  z-index: 10000;
+  /* transform: translateY(-100%); */
+  /* transition: all 100ms ease-in-out; */
+}
+
+.generate-button:hover {
+  /* background: blue; */
+  box-shadow: 0 0 0px 3px #dedede;
+}
+
+.generate-button:focus {
+  outline: none;
+}
+
+.generate-button img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.generate-button-error {
+  background: rgb(205, 86, 86);
+  padding: 5px 10px;
+}
+
+.generate-button-error:hover {
+  background: rgb(166, 67, 67);
+}
+
+.generate-button-loading .spinner {
+  width: 13px;
+  height: 13px;
+  border: 3px solid white;
+  border-left-color: transparent;
+  border-right-color: transparent;
+
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#prompt-Container {
+  position: absolute;
+  overflow: visible;
+  width: 800px;
+  border-radius: 8px;
+  height: 36px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: whitesmoke;
+  gap: 8px;
+
+  transition: opacity 2s ease-in-out;
+  bottom: 120px;
+  right: 10px;
+  box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.25);
+}
+
+.use-klevere-btn {
+  height: 100%;
+  width: 80px;
+  border-radius: 8px;
+  background: #2468ff;
+  color: #ffffff;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.cross-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  background-color: white;
+  border: none;
+  color: black;
+  cursor: pointer;
+}
+
+.settingMenu {
+  position: absolute;
+  width: 230px;
+  height: 200px;
+  right: -6px;
+  bottom: 66px;
+  z-index: 10;
+  background-color: #e7e7e7;
+  border-radius: 8px;
+}
+
+.language-list {
+  height: 150px;
+  overflow: auto;
+  padding-left: 8px;
+}
+
+.inputBox {
+  width: 230px;
+  background-color: inherit;
+  border: none;
+  padding: 0 5px;
+  margin-top: 5px;
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listItem {
+  text-decoration: none;
+  cursor: pointer;
+  list-style: none;
+  margin: 5px 0;
+  &:hover {
+    background-color: #2b2b2b;
+    color: white;
+  }
+  &:active {
+    background-color: #0b57d0ff;
+  }
+}
+.buttonWrapper {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  background-color: white;
+  border-radius: 40px;
+}
+
+.settingIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  background-color: white;
+  border: none;
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.first-input {
+  width: 100%;
+  border-radius: 8px;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+#output-container {
+  width: 550px;
+  height: 300px;
+  bottom: 194px;
+  right: 10px;
+  z-index: 10;
+  position: absolute;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: whitesmoke;
+  gap: 8px;
+  transition: opacity 2s ease-in-out;
+
+  box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.25);
+}
+
+#output-textarea {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: auto;
+  scroll-behavior: smooth;
+  text-overflow: ellipsis;
+  resize: none;
+  border-color: #4b81f4;
+  outline: none;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 400;
+}
+
+#buttons-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: start;
+}
+
+.copy-btn {
+  width: 100px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #2468ff;
+  border: 1px solid #2468ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+    background-color: transparent;
+  }
+}
+
+.remove-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  background-color: white;
+  top: -12px;
+  right: -12px;
+  border: none;
+  color: red;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#tone {
+  height: 28px;
+  border-radius: 8px;
+  width: 140px;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.text-content {
+  font-weight: 300;
+  font-size: 14px;
+  color: black;
+  white-space: nowrap;
+}
+.wrapper {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background-color: #e7e7e7;
+}
+
+.thunderDiv {
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.thunderMenu {
+  position: absolute;
+  height: 230px;
+  width: 250px;
+  border-radius: 8px;
+  background-color: #151521;
+  right: -169px;
+  bottom: 52px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 21px 0px rgba(112, 98, 112, 1);
+  -moz-box-shadow: 0px 0px 21px 0px rgba(112, 98, 112, 1);
+  box-shadow: 0px 0px 21px 0px rgba(112, 98, 112, 1);
+}
+
+.topBar {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #1e1e2d;
+}
+
+.basic-btn {
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  padding: 5px 5px;
+  background-color: #2b2b40;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    color: white;
+    background-color: #0b57d0ff;
+  }
+}
+
+.bottomContent {
+  height: 180px;
+  width: 100%;
+  background-color: inherit;
+  color: white;
+}
+
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  gap: 10px;
+  width: 100%;
+  overflow: auto;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+
+.menu-item {
+  width: 100%;
+  height: 50px;
+  list-style: none;
+  text-decoration: none;
+  background-color: #dedede;
+  transition: background-color 0.3s;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #4b81f4;
+}
+
+.suggestion-div {
+  width: 100%;
+  height: 100%;
+}
+
+.prompt-div {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+}
+
+.prompt-text {
+  padding: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #2468ff;
+  }
+}
+
+.thunder-cross-btn {
+  position: absolute;
+  bottom: 268px;
+  z-index: 20;
+  left: 193px;
+  cursor: pointer;
+}

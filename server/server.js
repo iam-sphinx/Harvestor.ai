@@ -1,9 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { oraPromise } from "ora";
 import config from "./config.js";
-import fetchLinkedInProfile from "./Scrappers/userLinkedinScrapper.js";
 
 const app = express().use(cors()).use(bodyParser.json());
 
@@ -34,7 +32,7 @@ async function makeGPTApiCall(prompt) {
 
   return response.json();
 }
-app.post("/mailgenerateContent", async (req, res) => {
+app.post("/generateContent", async (req, res) => {
   try {
     console.log(`----------\n${req.body.message}\n----------`);
     const message = req.body.message;
@@ -60,115 +58,11 @@ app.post("/mailgenerateContent", async (req, res) => {
   }
 });
 
-app.post("/linkedingenerateContent", async (req, res) => {
-  try {
-    console.log(`----------\n${req.body.message}\n----------`);
-    const message = req.body.message;
-    const tone = req.body.tone;
-    const outputLanguage = req.body.outputLanguage;
-    let prompt = "";
-    let rules = configure(config);
-    let task = "Task : Write a linkedin post based on following summary - ";
-    prompt += rules;
-    prompt += task;
-    prompt += req.body.message;
-    prompt += `Keep the Tone :${tone}.`;
-    prompt += `Output Language :${outputLanguage}.`;
-    console.log(prompt);
-    console.log(`--------------------`);
-    let reply = await makeGPTApiCall(prompt);
-    reply = reply.choices[0].text;
-    console.log(`----------\n${reply}\n----------`);
-    res.json({ reply });
-  } catch (error) {
-    console.log(error);
-    res.status(500);
-  }
-});
-
-app.post("/twittergenerateContent", async (req, res) => {
-  try {
-    console.log(`----------\n${req.body.message}\n----------`);
-    let prompt = "";
-    let rules = configure(config);
-    let task =
-      "Task : Write a tweet of less than 280 character with hashtags based on following summary :";
-    prompt += rules;
-    prompt += task;
-    prompt += req.body.message;
-    let reply = await makeGPTApiCall(prompt);
-    reply = reply.choices[0].text;
-    console.log(`----------\n${reply}\n----------`);
-    res.json({ reply });
-  } catch (error) {
-    console.log(error);
-    res.status(500);
-  }
-});
-
-app.post("/instagramgenerateContent", async (req, res) => {
-  try {
-    console.log(`----------\n${req.body.message}\n----------`);
-    let prompt = "";
-    let rules = configure(config);
-    let task =
-      "Task : Write a instagram post caption based on following summary : ";
-    prompt += rules;
-    prompt += task;
-    prompt += req.body.message;
-    let reply = await makeGPTApiCall(prompt);
-    reply = reply.choices[0].text;
-    console.log(`----------\n${reply}\n----------`);
-    res.json({ reply });
-  } catch (error) {
-    console.log(error);
-    res.status(500);
-  }
-});
-
-app.post("/user-linkedin", async (req, res) => {
-  try {
-    let prompt =
-      "Write a 280 character professional connection request for linkedin based on given userdata json of receiver ";
-    const profileURL = req.body.message;
-    const userDataJSON = await fetchLinkedInProfile(profileURL);
-    console.log(userDataJSON);
-    const userDataString = JSON.stringify(userDataJSON);
-    prompt += userDataString;
-    const rawReply = await oraPromise(conversation.sendMessage(prompt), {
-      text: prompt,
-    });
-    const reply = await Config.parse(rawReply.text);
-    console.log(`----------\n${reply}\n----------`);
-    res.json({ reply });
-  } catch (error) {
-    console.log(error);
-    res.status(500);
-  }
-});
-
-app.post("/company-linkedin", async (req, res) => {
-  try {
-    const rawReply = await oraPromise(
-      conversation.sendMessage(req.body.message),
-      {
-        text: req.body.message,
-      }
-    );
-    const reply = await Config.parse(rawReply.text);
-    console.log(`----------\n${reply}\n----------`);
-    res.json({ reply });
-  } catch (error) {
-    console.log(error);
-    res.status(500);
-  }
-});
-
 async function start() {
   try {
     app.listen(3000, () => {
       console.log(`Server is listening on port 3000`);
-      console.log(`You may now use Klevere AI`);
+      console.log(`You may now use AI`);
     });
   } catch (error) {
     console.error("Error starting the server:", error);

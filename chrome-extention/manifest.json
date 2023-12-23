@@ -1,0 +1,30 @@
+{
+  "author": "Ashutosh Kumar Choudhary",
+  "manifest_version": 3,
+  "name": "AI Chrome Extention",
+  "version": "1.0.0",
+  "description": "Enhance your reading experience with generative AI",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "createContent.js"
+      ]
+    }
+  ]
+}
