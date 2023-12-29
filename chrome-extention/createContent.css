@@ -1,5 +1,10 @@
 .generate-button {
-  background: #181c23;
+
+  height: 30px;
+  width: 30px;
+  
+
+  /* background: #181c23;
   width: 24px;
   height: 24px;
   overflow: hidden;
@@ -8,11 +13,8 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 80px;
-  right: -10px;
-  z-index: 10000;
+  justify-content: center; */
+
   /* transform: translateY(-100%); */
   /* transition: all 100ms ease-in-out; */
 }

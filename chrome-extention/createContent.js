@@ -40,10 +40,25 @@ const insertText = (text) => {
 };
 
 const createButton = async () => {
+  // creating bottom div
+  lastActiveElement = document.createElement("div");
+  lastActiveElement.style.width = "50px";
+  lastActiveElement.style.height = "50px";
+  lastActiveElement.style.position = "fixed";
+  lastActiveElement.style.bottom = "10px";
+  lastActiveElement.style.right = "10px";
+  lastActiveElement.style.backgroundColor = "black";
+  lastActiveElement.setAttribute("id", "bottom-div");
+  lastActiveElement.style.zIndex = 10;
+  document.body.appendChild(lastActiveElement);
+
+
   // Create button
   const button = document.createElement("button");
   button.id = "generate-button";
   button.classList.add("generate-button");
+
+  // lastActiveElement.appendChild(button);
 
   //thunder icon
   const thunderIconCode =
@@ -466,7 +481,7 @@ function insertTextArea(text) {
   textarea.textContent = text;
 }
 
-function extractTextContent() { 
+function extractTextContent() {
   const paragraphs = document.querySelectorAll("p");
   let content = "";
 
