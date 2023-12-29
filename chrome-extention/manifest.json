@@ -1,9 +1,14 @@
 {
   "author": "Ashutosh Kumar Choudhary",
   "manifest_version": 3,
-  "name": "AI Chrome Extention",
+  "name": "Harvestor AI",
   "version": "1.0.0",
   "description": "Enhance your reading experience with generative AI",
+  "icons": {
+    "16": "resources/icons/16.png",
+    "48": "resources/icons/32.png",
+    "128": "resources/icons/64.png"
+  },
   "permissions": [
     "activeTab",
     "storage",
