@@ -1,18 +1,10 @@
 .generate-button {
   background: #181c23;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   overflow: hidden;
-  color: white;
-  border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 80px;
-  right: -10px;
-  z-index: 10000;
+ 
   
   /* transform: translateY(-100%); */
   /* transition: all 100ms ease-in-out; */
@@ -67,7 +59,7 @@
   overflow: visible;
   width: 800px;
   border-radius: 8px;
-  height: 36px;
+  height: 53px;
   padding: 8px;
   display: flex;
   align-items: center;
