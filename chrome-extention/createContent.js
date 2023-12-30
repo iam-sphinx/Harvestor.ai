@@ -1,4 +1,4 @@
-var lastActiveElement = null;
+let globalContainter = null;
 
 const initialValue = (bottomContent) => {
   bottomContent.innerHTML = "";
@@ -40,19 +40,17 @@ const insertText = (text) => {
 };
 
 const createButton = async () => {
-
   // creating bottom div
-  lastActiveElement = document.createElement('div');
-  lastActiveElement.style.width = "50px";
-  lastActiveElement.style.height = "50px";
-  lastActiveElement.style.position = "fixed";
-  lastActiveElement.style.bottom = "10px";
-  lastActiveElement.style.right = "10px";
-  lastActiveElement.style.backgroundColor = "black";
-  lastActiveElement.setAttribute("id", "bottom-div");
-  lastActiveElement.style.zIndex = 10;
-  document.body.appendChild(lastActiveElement);
-
+  globalContainter = document.createElement("div");
+  globalContainter.style.width = "50px";
+  globalContainter.style.height = "50px";
+  globalContainter.style.position = "fixed";
+  globalContainter.style.bottom = "10px";
+  globalContainter.style.right = "10px";
+  globalContainter.style.backgroundColor = "black";
+  globalContainter.setAttribute("id", "bottom-div");
+  globalContainter.style.zIndex = 10;
+  document.body.appendChild(globalContainter);
 
   // Create button
   const button = document.createElement("button");
@@ -255,7 +253,7 @@ const createButton = async () => {
 
   // Add image inside button
   const img = document.createElement("img");
-  // img.src = chrome.runtime.getURL("resources/icons/circlelogo.png");
+  img.src = chrome.runtime.getURL("resources/icons/16.png");
   img.style.pointerEvents = "none";
   button.appendChild(img);
 
@@ -308,11 +306,13 @@ const createButton = async () => {
     action.addEventListener("click", () => {
       // sending input data to the server
       const text = document.getElementById("first-input").value;
+      const webPageContent = extractTextContent();
+      console.log(webPageContent);
       setButtonLoading();
       // UI TESTING CHANGES
       console.log(text);
       chrome.runtime.sendMessage({
-        type: "mail",
+        webPageContent,
         tone: selectedTone,
         OutputLanguage: selectedOutputLanguage,
         text,
@@ -321,12 +321,14 @@ const createButton = async () => {
     });
     container.appendChild(action);
     if (document.getElementById("prompt-Container") == null) {
-      lastActiveElement.appendChild(container);
+      globalContainter.appendChild(container);
     }
   });
 
-  lastActiveElement.appendChild(button);
+  globalContainter.appendChild(button);
 };
+
+// Creating button and injecting it in webpage.
 createButton();
 const deleteButton = () => {
   const button = document.getElementById("generate-button");
@@ -369,34 +371,6 @@ const setButtonLoaded = () => {
   button.innerHTML = "";
   button.appendChild(img);
 };
-
-// const handleClick = (e) => {
-//   // If element is GPT-3 button, do nothing
-//   if (e.target.id == "generate-button") {
-//     return;
-//   }
-
-//   // If element is in editable parent, create button
-//   const editableDivs = getAllEditable();
-//   for (const div of editableDivs) {
-//     console.log(editableDivs);
-//     if (div.contains(e.target)) {
-//       deleteButton();
-//       const tempElement = document.querySelector(
-//         'div[aria-label="New Message"]'
-//       );
-
-//       lastActiveElement = tempElement;
-//       createButton();
-//       break;
-//     }
-//   }
-// };
-
-// Add event listeners
-document.body.addEventListener("click", handleClick);
-document.body.addEventListener("resize", deleteButton);
-document.body.addEventListener("scroll", deleteButton);
 
 function insertTextArea(text) {
   if (!document.getElementById("output-container")) {
@@ -474,22 +448,25 @@ function insertTextArea(text) {
     var parentElement = document.getElementById("prompt-Container");
     console.log(parentElement);
     if (document.getElementById("output-container") == null) {
-      lastActiveElement.appendChild(container);
+      globalContainter.appendChild(container);
     }
   }
   textarea.textContent = text;
 }
 
-function extractTextContent() { 
+// This function scraps data from <p> and append into single paragraph.
+const extractTextContent = async () => {
   const paragraphs = document.querySelectorAll("p");
   let content = "";
 
-  paragraphs.forEach(function (paragraph) {
-    content += paragraph.textContent + "\n";
-  });
+  await Promise.all(
+    Array.from(paragraphs).map(async (paragraph) => {
+      content += (await paragraph.textContent) + "\n";
+    })
+  );
 
   return content;
-}
+};
 
 chrome.runtime.onMessage.addListener((request) => {
   // error handling is left
@@ -499,25 +476,5 @@ chrome.runtime.onMessage.addListener((request) => {
     setButtonLoaded();
   } else {
     console.log("error occured in gmail script");
-  }
-});
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "runScraper") {
-    console.log("hererere");
-    // Your scraping logic here
-    let scrapedContent = extractTextContent();
-    // Send the scraped content back to the extension
-    chrome.runtime.sendMessage({
-      action: "scrapedContent",
-      content: scrapedContent,
-    });
-  }
-});
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "scrapingComplete") {
-    // inject button at bottom of dom
-  
   }
 });
