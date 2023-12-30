@@ -5,7 +5,7 @@ import config from "./config.js";
 
 const app = express().use(cors()).use(bodyParser.json());
 
-const GPT_API_KEY = "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";
+const GPT_API_KEY = "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";
 const GPT_API_URL =
   "https://api.openai.com/v1/engines/text-davinci-003/completions";
 
