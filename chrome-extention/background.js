@@ -1,4 +1,4 @@
-const mailgenerateContent = async (
+const queryAiServer = async (
   prompt,
   webPageContent,
   tone,
@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener(async (request) => {
     const webPageContent = request.webPageContent;
     console.log(prompt);
     console.log(webPageContent);
-    const serverContentOutput = await mailgenerateContent(
+    const serverContentOutput = await queryAiServer(
       prompt,
       webPageContent,
       tone,

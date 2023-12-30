@@ -303,10 +303,10 @@ const createButton = async () => {
     const action = document.createElement("button");
     action.textContent = "Generate";
     action.classList.add("use-klevere-btn");
-    action.addEventListener("click", () => {
+    action.addEventListener("click", async () => {
       // sending input data to the server
       const text = document.getElementById("first-input").value;
-      const webPageContent = extractTextContent();
+      const webPageContent = await extractTextContent();
       console.log(webPageContent);
       setButtonLoading();
       // UI TESTING CHANGES
